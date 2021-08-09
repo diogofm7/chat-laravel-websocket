@@ -47,7 +47,6 @@ services:
         - ping
 volumes:
   database: null
-  cache: null
 networks:
   traefik:
     external: true
