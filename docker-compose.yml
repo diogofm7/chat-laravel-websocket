@@ -1,0 +1,58 @@
+version: "3.7"
+services:
+  app:
+    image: kooldev/php:8.0-nginx-prod
+    ports:
+      - ${KOOL_APP_PORT:-8080}:80
+      - 2053:6001
+    environment:
+      ASUSER: ${KOOL_ASUSER:-0}
+      UID: ${UID:-0}
+      PHP_DATE_TIMEZONE: ${PHP_TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - .:/app:delegated
+      - $HOME/.ssh:/home/kool/.ssh:delegated
+      - $HOME/.ssh:/root/.ssh:delegated
+    networks:
+      - kool_local
+      - kool_global
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webchat.rule=Host(`webchat.diogofmedeiros.com`)"
+      - "traefik.http.routers.webchat.entrypoints=web"
+      - "traefik.http.routers.webchat-secured.rule=Host(`webchat.diogofmedeiros.com`)"
+      - "traefik.http.routers.webchat-secured.entrypoints=web-secured"
+      - "traefik.http.services.webchat-secured.loadbalancer.server.port=80"
+      #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
+  database:
+    image: mariadb:latest
+    ports:
+      - ${KOOL_DATABASE_PORT:-3308}:3306
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD-rootpwd}
+      MYSQL_DATABASE: ${DB_DATABASE-database}
+      MYSQL_USER: ${DB_USERNAME-user}
+      MYSQL_PASSWORD: ${DB_PASSWORD-userpwd}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - database:/var/lib/mysql:delegated
+    networks:
+      - kool_local
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+volumes:
+  database: null
+  cache: null
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik_proxy}
+  kool_local: null
+  kool_global:
+    external: true
+    name: ${KOOL_GLOBAL_NETWORK:-kool_global}
