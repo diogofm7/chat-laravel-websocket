@@ -38,6 +38,7 @@ services:
           - .:/app:delegated
           - $HOME/.ssh:/home/kool/.ssh:delegated
           - $HOME/.ssh:/root/.ssh:delegated
+          - ../traefik/certs:./certs
       networks:
           - kool_local
           - kool_global
