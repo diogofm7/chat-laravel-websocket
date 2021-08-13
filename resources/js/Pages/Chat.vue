@@ -72,6 +72,8 @@
     import AppLayout from '@/Layouts/AppLayout.vue'
     import store from '../store'
 
+    store.dispatch('userStateAction')
+
     export default {
         components: {
             AppLayout,
