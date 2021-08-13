@@ -27,9 +27,8 @@ services:
       #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
   websocket:
     image: kooldev/php:8.0-nginx-prod
-#    ports:
-    #          - ${KOOL_APP_PORT:-8080}:80
-#      - 2053:6001
+    ports:
+      - 2053:6001
     environment:
       ASUSER: ${KOOL_ASUSER:-0}
       UID: ${UID:-0}
@@ -37,18 +36,16 @@ services:
     volumes:
       - .:/app:delegated
       - ../traefik/certs:/certs
-    expose:
-      - 6001
     networks:
       - kool_local
       - kool_global
       - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.webchat-wss.rule=Host(`webchat.diogofmedeiros.com`)"
-      - "traefik.http.routers.webchat-wss.entrypoints=wss"
-      - "traefik.http.services.webchat-wss.loadbalancer.server.port=6001"
-      - "traefik.http.services.webchat-wss.loadbalancer.server.scheme=https"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.webchat-wss.rule=Host(`webchat.diogofmedeiros.com`)"
+#      - "traefik.http.routers.webchat-wss.entrypoints=wss"
+#      - "traefik.http.services.webchat-wss.loadbalancer.server.port=6001"
+#      - "traefik.http.services.webchat-wss.loadbalancer.server.scheme=https"
 #      #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
   database:
     image: mariadb:latest
