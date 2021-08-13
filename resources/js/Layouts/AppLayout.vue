@@ -12,9 +12,9 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-<!--                                <Link :href="route('welcome')">
+                                <Link :href="route('welcome')">
                                     <jet-application-mark class="block h-9 w-auto" />
-                                </Link>-->
+                                </Link>
                             </div>
 
                             <!-- Navigation Links -->
