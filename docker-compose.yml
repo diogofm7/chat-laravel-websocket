@@ -36,6 +36,7 @@ services:
       PHP_DATE_TIMEZONE: ${PHP_TIMEZONE:-America/Sao_Paulo}
     volumes:
       - .:/app:delegated
+      - ../traefik/certs:/certs
     expose:
       - 6001
     networks:
