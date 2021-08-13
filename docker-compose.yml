@@ -26,28 +26,26 @@ services:
       - "traefik.http.services.webchat-secured.loadbalancer.server.port=80"
       #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
   websocket:
-      image: kooldev/php:8.0-nginx-prod
-#      ports:
-#          - ${KOOL_APP_PORT:-8080}:80
-#          - 2053:6001
-      environment:
-          ASUSER: ${KOOL_ASUSER:-0}
-          UID: ${UID:-0}
-          PHP_DATE_TIMEZONE: ${PHP_TIMEZONE:-America/Sao_Paulo}
-      volumes:
-          - .:/app:delegated
-          - $HOME/.ssh:/home/kool/.ssh:delegated
-          - $HOME/.ssh:/root/.ssh:delegated
-      networks:
-          - kool_local
-          - kool_global
-          - traefik
-      labels:
-          - "traefik.enable=true"
-          - "traefik.http.routers.webchat-wss.rule=Host(`webchat.diogofmedeiros.com`)"
-          - "traefik.http.routers.webchat-wss.entrypoints=wss"
-          - "traefik.http.services.webchat-wss.loadbalancer.server.port=6001"
-          #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
+    image: kooldev/php:8.0-nginx-prod
+    ports:
+    #          - ${KOOL_APP_PORT:-8080}:80
+      - 2053:6001
+    environment:
+      ASUSER: ${KOOL_ASUSER:-0}
+      UID: ${UID:-0}
+      PHP_DATE_TIMEZONE: ${PHP_TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - .:/app:delegated
+    networks:
+      - kool_local
+      - kool_global
+      - traefik
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.webchat-wss.rule=Host(`webchat.diogofmedeiros.com`)"
+#      - "traefik.http.routers.webchat-wss.entrypoints=wss"
+#      - "traefik.http.services.webchat-wss.loadbalancer.server.port=6001"
+#      #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
   database:
     image: mariadb:latest
     ports:
