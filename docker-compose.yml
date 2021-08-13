@@ -48,6 +48,7 @@ services:
       - "traefik.http.routers.webchat-wss.rule=Host(`webchat.diogofmedeiros.com`)"
       - "traefik.http.routers.webchat-wss.entrypoints=wss"
       - "traefik.http.services.webchat-wss.loadbalancer.server.port=6001"
+      - "traefik.http.services.webchat-wss.loadbalancer.server.scheme=https"
 #      #- "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_proxy}"
   database:
     image: mariadb:latest
