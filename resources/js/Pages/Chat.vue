@@ -55,7 +55,7 @@
                             <form v-on:submit.prevent="sendMessage">
                                 <div class="flex rounded-md overflow-hidden border border-gray-300">
                                     <input v-model="message" type="text" class="flex-1 px-4 py-2 text-sm border-0">
-                                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2">Enviar</button>
+                                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2" :disabled="sending">Enviar</button>
                                 </div>
                             </form>
                         </div>
@@ -83,7 +83,8 @@
                 users: [],
                 messages: [],
                 userActive: null,
-                message: ''
+                message: '',
+                sending: false
             }
         },
         mounted() {
@@ -142,6 +143,7 @@
                 this.scrollToBottom()
             },
             sendMessage: async function () {
+                this.sending = true
                 await axios.post('api/messages', {
                     'message': this.message,
                     'to': this.userActive.id
@@ -151,17 +153,8 @@
                 })
 
                 this.scrollToBottom()
+                this.sending = false
             }
         }
     }
 </script>
-
-<style>
-.messageFromMe {
-    @apply bg-indigo-300 bg-opacity-25;
-}
-
-.messageToMe {
-    @apply bg-gray-300 bg-opacity-25;
-}
-</style>
