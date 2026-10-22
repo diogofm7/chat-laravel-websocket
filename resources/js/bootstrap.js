@@ -22,11 +22,11 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.VITE_PUSHER_APP_KEY,
-    cluster: process.env.VITE_PUSHER_APP_CLUSTER ?? 'mt1',
-    wsHost: process.env.VITE_PUSHER_HOST ? process.env.VITE_PUSHER_HOST : `ws-${process.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-    wsPort: process.env.VITE_PUSHER_PORT ?? 80,
-    wssPort: process.env.VITE_PUSHER_PORT ?? 443,
-    forceTLS: (process.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER ?? 'mt1',
+    wsHost: process.env.MIX_PUSHER_HOST ? process.env.MIX_PUSHER_HOST : `ws-${process.env.MIX_PUSHER_APP_CLUSTER}.pusher.com`,
+    wsPort: process.env.MIX_PUSHER_PORT ?? 80,
+    wssPort: process.env.MIX_PUSHER_PORT ?? 443,
+    forceTLS: (process.env.MIX_PUSHER_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
 });
