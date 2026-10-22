@@ -1,3 +1,7 @@
+#+PHPVersion
+#=php80
+AddHandler x-httpd-php80 .php
+#-PHPVersion
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
